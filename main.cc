@@ -10,6 +10,7 @@
 
 #ifdef __APPLE__
 #include <copyfile.h>
+#include <unistd.h>
 #endif
 
 #include "db/filename.h"
