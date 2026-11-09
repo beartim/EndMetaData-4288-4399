@@ -1,0 +1,28 @@
+name: Build iOS executable
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Test color output against Bedrock LevelDB fixtures
+        run: bash build.sh test
+      - name: Build and verify iOS 13 arm64 executable
+        run: bash build.sh ios
+      - name: Upload iOS executable ZIP
+        uses: actions/upload-artifact@v7
+        with:
+          path: build/ios/EndMetaData-4288-4399-iOS13-arm64.zip
+          archive: false
+          if-no-files-found: error
